@@ -260,7 +260,7 @@ void loop()
        delay(1000);
       }
 
-    // ---------------- LIFE STATUS: SEND REPLY TO IP AND PORT THAT SENT US PACKET ----------------
+    // ---------------- LIFE STATUS: IF ALIVE, SEND REPLY TO IP AND PORT THAT SENT US PACKET ----------------
     // ---------------- LIFE STATUS: IF DEAD, FLATLINE SOUND OVER PIEZO ----------------
 
     lcd.clear();
