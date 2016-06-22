@@ -85,7 +85,7 @@ IPAddress ip( 192, 168, 1, 20 );     // IP address of this arduino.
 const char SERVER_NAME[]      = "WEBSERVER ADDRESS";  // webserver address
 unsigned int SERVER_PORT      = WEBSERVER PORT; // webserver port
 unsigned int UDP_PORT         = UDP PORT; // port to listen for UDP packets
-const char SEARCH_LOC[]       = "SEARCH LOCATION";  // User specified location. Just a name, serves no other purpose.
+const char SEARCH_LOC[]       = "SEARCH LOCATION";  // User specified location of traffic light. Just a name, serves no other purpose.
 
 // buffers for receiving and sending data
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE];  //buffer to hold incoming packet,
@@ -260,7 +260,7 @@ void loop()
        delay(1000);
       }
 
-    // ---------------- LIFE STATUS: IF ALIVE, SEND REPLY TO IP AND PORT THAT SENT US PACKET ----------------
+    // ---------------- LIFE STATUS: SEND REPLY TO IP AND PORT THAT SENT US PACKET ----------------
     // ---------------- LIFE STATUS: IF DEAD, FLATLINE SOUND OVER PIEZO ----------------
 
     lcd.clear();
