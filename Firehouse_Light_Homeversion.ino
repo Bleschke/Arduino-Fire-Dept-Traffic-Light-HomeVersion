@@ -10,8 +10,8 @@
  
  Modified by : Brian Leschke 13617
  
- Date: June 21,2016
- Version 6.0
+ Date: October 27,2016
+ Version 6.1
  
  Created to connect to server on Raspberry Pi or EasyPHP.
  This program will mock the traffic light at Co. 13 Fallston
@@ -34,6 +34,7 @@
  6/19/2016 - "cleaned up", organized, and simplified code.
  6/19/2016 - ADDED UDP SERVER: This unit will also receive UDP packets that are sent by the Firehouse Traffic Light UDP Server.
              This is to make sure that the Traffic Light is working correctly and the network is active. 
+ 10/27/2016 - UDP response packet is now sent out 4 times.
  
 
  */
@@ -72,8 +73,8 @@ char Str[11];
 int prevNum  = 0;
 int num      = 0;
 long onUntil = 0;
-long pollingInterval = 1000; // in milliseconds
-long onTimeGreen     = 300000; // time, in milliseconds, for Green light to be on after new alert.
+long pollingInterval = 1000;    // in milliseconds
+long onTimeGreen     = 299000;  // time, in milliseconds, for Green light to be on after new alert.
 long onTimeRed       = 179000;  //  time, in milliseconds, for Red light to be on after new alert.
 long onTimeYellow    = 119000;  // time, in milliseconds, for Yellow light to be on after new alert.
 
@@ -83,13 +84,13 @@ long onTimeYellow    = 119000;  // time, in milliseconds, for Yellow light to be
 byte mac[]                    = {  0x90, 0xA2, 0xEA, 0x01, 0x97, 0x10 }; // Arduino MAC Address
 IPAddress ip( 192, 168, 1, 20 );     // IP address of this arduino.
 const char SERVER_NAME[]      = "WEBSERVER ADDRESS";  // webserver address
-unsigned int SERVER_PORT      = WEBSERVER PORT; // webserver port
-unsigned int UDP_PORT         = UDP PORT; // port to listen for UDP packets
-const char SEARCH_LOC[]       = "SEARCH LOCATION";  // User specified location of traffic light. Just a name, serves no other purpose.
+unsigned int SERVER_PORT      = WEBSERVER PORT;       // webserver port
+unsigned int UDP_PORT         = UDP PORT;             // port to listen for UDP packets
+const char SEARCH_LOC[]       = "SEARCH LOCATION";    // User specified location of traffic light. Just a name, serves no other purpose.
 
 // buffers for receiving and sending data
-char packetBuffer[UDP_TX_PACKET_MAX_SIZE];  //buffer to hold incoming packet,
-char  ReplyBuffer[] = "UDP ACK MESSAGE";       // UDP Acknowledgement message to send back.
+char packetBuffer[UDP_TX_PACKET_MAX_SIZE];  //buffer to hold incoming packet.
+char  ReplyBuffer[] = "UDP ACK MESSAGE";    // UDP Acknowledgement message to send back.
 
 
 // ---------------- INITIALIZATION ---------------- 
@@ -252,8 +253,7 @@ void loop()
     
     // ---------------- LIFE STATUS: ALIVE. HEARTBEAT SOUND OVER PIEZO ----------------
 
-    for(int x = 0; x < 2; x++)
-      {
+    for(int x = 0; x < 2; x++){
        tone(6,646,100);
        delay(1000);
        tone(6,646,100);
@@ -264,9 +264,13 @@ void loop()
     // ---------------- LIFE STATUS: IF DEAD, FLATLINE SOUND OVER PIEZO ----------------
 
     lcd.clear();
-    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
-    Udp.write(ReplyBuffer);
-    Udp.endPacket();
+    for(int x = 0; x < 4; x++){  // Send the response packet 4 times if traffic light is alive.
+     Serial.println("Sending UDP Packet");
+     Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
+     Udp.write(ReplyBuffer);
+     Udp.endPacket(); 
+     delay(1000);
+    }
     
     // Display packet information and contents that were sent
     lcd.setCursor(0,0);
