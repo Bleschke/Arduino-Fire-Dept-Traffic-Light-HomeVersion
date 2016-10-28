@@ -399,7 +399,7 @@ void loop()
      delay(500);
      digitalWrite(TrafficRED,HIGH);
       }
-      delay(179000);  // 3 minutes delay
+      delay(onTimeRed);  // 3 minutes delay
       digitalWrite(TrafficRED,LOW);
       Serial.println("RED LIGHT OFF");
       Serial.println("YELLOW LIGHT ON"); 
@@ -418,7 +418,7 @@ void loop()
      delay(500);
      digitalWrite(TrafficYELLOW,HIGH);
       }
-      delay(119000);  // 2 minutes delay
+      delay(onTimeYellow);  // 2 minutes delay
       digitalWrite(TrafficYELLOW,LOW);
       Serial.println("YELLOW LIGHT OFF");
       Serial.println("GREEN LIGHT ON");
