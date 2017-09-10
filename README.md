@@ -26,9 +26,10 @@ Project Breakdown:
 You will need:
 
 1. Arduino Uno
-2. Sainsmart 4 module high voltage relay
+2. 1 RED, 2 Yellow, and 1 Green LED. 
 3. Arduino programming software
-4. Webserver hosting script.
+4. Piezo
+5. Webserver hosting script.
 
 ### **Usage**
 
