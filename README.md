@@ -29,7 +29,8 @@ You will need:
 2. 1 RED, 2 Yellow, and 1 Green LED. 
 3. Arduino programming software
 4. Piezo
-5. Webserver hosting script.
+5. LCD 20x4 LCD module
+6. Webserver hosting script.
 
 ### **Usage**
 
